@@ -38,5 +38,6 @@ $router::error(null, function($self, $values){
     $self::status(404);
 });
 
+// accept the request and perform routing
 $router::accept();
 ```
