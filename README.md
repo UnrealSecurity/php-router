@@ -31,6 +31,8 @@ $router::routex('*', 'example.com', '/.*/', function($self, $values) {
 $router::routex('GET', 'dev.example.com', '/^\/(.*)\/(.*)$/', function($self, $values, $a, $b) {
     // this could be used to handle GET requests to 
     // https://dev.example.com/hello/world
+    // $a = hello
+    // $b = world
 });
 
 // handle routing errors
