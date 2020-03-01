@@ -7,7 +7,7 @@ that uses APCu to store firewall rules, block/allow IP addresses, block maliciou
 ### Installation
 - Create your `index.php` file which is going to handle all the requests
 - Download `Router.min.php` and place it to your HTTP server's root directory
-- Create a `.htaccess` file and make it redirect all requests to `index.php`
+- Create a `.htaccess` file and make it redirect all requests to your `index.php`
 
 ### Usage
 In your `index.php` you could add something like this
