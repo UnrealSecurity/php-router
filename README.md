@@ -41,3 +41,6 @@ $router::error(null, function($self, $values){
 // accept the request and perform routing
 $router::accept();
 ```
+
+I have added comments and explained what most methods do in ``Router.php``
+but  I will try to write better documentation here some day.
