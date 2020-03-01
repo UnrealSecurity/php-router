@@ -1,5 +1,6 @@
 # PHP Router
-PHP router with advanced features
+PHP router with advanced features and some experimental features such as `RouterFirewall`
+that uses APCu to store firewall rules, block/allow IP addresses, block malicious looking requests and ratelimit users.
 
 **Note:** Use Router.php as a reference only. Don't include it. Use the minified version instead or minify it yourself.
 
