@@ -1,4 +1,4 @@
-# php-router
+# PHP Router
 PHP router with advanced features
 
 **Note:** Use Router.php as a reference only. Don't include it. Use the minified version instead or minify it yourself.
