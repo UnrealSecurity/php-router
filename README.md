@@ -9,6 +9,20 @@ that uses APCu to store firewall rules, block/allow IP addresses, block maliciou
 - Download `Router.min.php` and place it to your HTTP server's root directory
 - Create a `.htaccess` file and make it redirect all requests to your `index.php`
 
+### Example .htaccess files
+Redirect request to ``index.php`` only if requested resource doesn't exist
+```htaccess
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php [NC,L,QSA]
+```
+Redirect request to ``index.php`` even if requested resource exists
+```htaccess
+RewriteEngine on
+RewriteRule ^((?!index\.php).*)$ /index.php [L]
+```
+
 ### Usage
 In your `index.php` you could add something like this
 ```php
