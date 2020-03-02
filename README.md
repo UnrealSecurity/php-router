@@ -11,14 +11,14 @@ that uses APCu to store firewall rules, block/allow IP addresses, block maliciou
 
 ### Example .htaccess files
 Redirect request to ``index.php`` only if requested resource doesn't exist
-```htaccess
+```apache
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php [NC,L,QSA]
 ```
 Redirect request to ``index.php`` even if requested resource exists
-```htaccess
+```apache
 RewriteEngine on
 RewriteRule ^((?!index\.php).*)$ /index.php [L]
 ```
