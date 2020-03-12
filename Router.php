@@ -29,7 +29,7 @@
         private static $uri;
         private static $path;
         private static $query;
-		private static $method;
+        private static $method;
         private static $_this;
         private static $routes = array();
         private static $accepted = false;
