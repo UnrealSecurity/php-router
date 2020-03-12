@@ -35,20 +35,20 @@
         private static $accepted = false;
         private static $signature = null;
         private static $cd = null;
-		private static $continue = false;
+        private static $continue = false;
         private static $actions = [
-			'error' => array(),
+            'error' => array(),
         ];
         private static $firewall = null;
 
         // class constructor
         function __construct($base_path=null) {
             self::$_this = $this;
-			self::$host = $_SERVER['HTTP_HOST'];
-			self::$uri = $_SERVER['REQUEST_URI'];
-			self::$query = $_SERVER['QUERY_STRING'];
-			self::$path = urldecode(self::$uri); //strtok(urldecode(self::$uri), '?');
-			self::$method = strtoupper($_SERVER['REQUEST_METHOD']);
+            self::$host = $_SERVER['HTTP_HOST'];
+            self::$uri = $_SERVER['REQUEST_URI'];
+            self::$query = $_SERVER['QUERY_STRING'];
+            self::$path = urldecode(self::$uri); //strtok(urldecode(self::$uri), '?');
+            self::$method = strtoupper($_SERVER['REQUEST_METHOD']);
             self::$routes = array();
             self::$signature = md5($_SERVER['REMOTE_ADDR']);
 
@@ -86,14 +86,14 @@
         function route($method, $host, $route, $action, $regexp=false, $reOptions=null) {
             if ($regexp && self::$cd != null) {
                 $route = '/'.str_replace('/', '\/', self::$cd).$route.'/'.($reOptions!=null?$reOptions:"");
-				// $route = '/'.self::trim(str_replace('/', '\/', self::$cd).$route).'/'.($reOptions!=null?$reOptions:"");
+                // $route = '/'.self::trim(str_replace('/', '\/', self::$cd).$route).'/'.($reOptions!=null?$reOptions:"");
             } else if (!$regexp && self::$cd != null) {
                 $route = self::trim(self::$cd.$route);
             }
 
-			$method = strtoupper($method);
-			if (!$regexp && substr($route, strlen($route)-1) !== '/') $route .= '/';
-			
+            $method = strtoupper($method);
+            if (!$regexp && substr($route, strlen($route)-1) !== '/') $route .= '/';
+            
             self::$routes[] = [
                 'method' => $method,
                 'host' => $host,
@@ -105,7 +105,7 @@
 
         // add new route (expects $host to be a regular expression)
         function routex($method, $host, $route, $action, $reOptions=null) {
-			self::route($method, $host, $route, $action, true, $reOptions);
+            self::route($method, $host, $route, $action, true, $reOptions);
         }
         
         // set callback for error event
@@ -182,15 +182,15 @@
             fclose($fp);
             exit();
         }
-		
-		// call this in route's callback function to indicate you want router to keep searching for matching routes
-		// example: you have routes for /page/ and /page/?param=value and you want to do something when when ?param is supplied
-		// but also want to handle default action for /page/
-		//
-		// $router::continue();
-		function continue() {
-			self::$continue = true;
-		}
+        
+        // call this in route's callback function to indicate you want router to keep searching for matching routes
+        // example: you have routes for /page/ and /page/?param=value and you want to do something when when ?param is supplied
+        // but also want to handle default action for /page/
+        //
+        // $router::continue();
+        function continue() {
+            self::$continue = true;
+        }
 
         // splits a string using '/' as delimiter and also removes empty items from resulting array
         function split($str) {
@@ -207,13 +207,13 @@
         // finally removes '/' from the end of the string if there's one
         function trim($str) {
             $str = strtok($str, '?');
-			
-			while (true) {
-				if (strpos($str, '//') != true && strpos($str, '..') != true) break;
-				$str = str_replace('..', '.', $str);
-				$str = str_replace('//', '/', $str);
-			}
-			
+            
+            while (true) {
+                if (strpos($str, '//') != true && strpos($str, '..') != true) break;
+                $str = str_replace('..', '.', $str);
+                $str = str_replace('//', '/', $str);
+            }
+            
             if (strlen($str) > 0 && $str[strlen($str)-1] == '/') {
                 return substr($str, 0, strlen($str)-1);
             }
@@ -350,33 +350,33 @@
                 'method' => self::$method,
                 'query' => self::$query
             ];
-			
+            
             for ($i=count(self::$routes)-1; $i>=0; $i--) {
-				$obj = self::$routes[$i];
-				
-				if ($obj['host'] == null || $obj['host'] == self::$host) {
-					if ($obj['regexp'] === true) {
+                $obj = self::$routes[$i];
+                
+                if ($obj['host'] == null || $obj['host'] == self::$host) {
+                    if ($obj['regexp'] === true) {
                         $matches = false;
-						if (($obj['method'] == '*' || self::$method == $obj['method']) && preg_match($obj['route'], self::$path, $matches)) {
+                        if (($obj['method'] == '*' || self::$method == $obj['method']) && preg_match($obj['route'], self::$path, $matches)) {
                             if ($matches != false) array_shift($matches);
-							$found = true; $obj['action'](self::$_this, $values, ...$matches);
-							if (!self::$continue) {
-								break;
-							}
-							self::$continue = false;
-						}
-					} else {
-						if (substr(self::$path, strlen(self::$path)-1) !== '/') self::$path .= '/';
-						if (($obj['method'] == '*' || self::$method == $obj['method']) && $obj['route'] === self::$path) {
-							$found = true; $obj['action'](self::$_this, $values);
-							if (!self::$continue) {
-								break;
-							}
-							self::$continue = false;
-						}
-					}
-				}
-			}
+                            $found = true; $obj['action'](self::$_this, $values, ...$matches);
+                            if (!self::$continue) {
+                                break;
+                            }
+                            self::$continue = false;
+                        }
+                    } else {
+                        if (substr(self::$path, strlen(self::$path)-1) !== '/') self::$path .= '/';
+                        if (($obj['method'] == '*' || self::$method == $obj['method']) && $obj['route'] === self::$path) {
+                            $found = true; $obj['action'](self::$_this, $values);
+                            if (!self::$continue) {
+                                break;
+                            }
+                            self::$continue = false;
+                        }
+                    }
+                }
+            }
 
             if (!$found) {
                 if (array_key_exists(self::$host, self::$actions['error']) && self::$actions['error'][self::$host] != null) {
